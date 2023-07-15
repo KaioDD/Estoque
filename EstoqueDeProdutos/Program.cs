@@ -49,7 +49,7 @@ class Program
                     int indiceRemover = int.Parse(Console.ReadLine());
                     if (indiceRemover >= 0 && indiceRemover < produtos.Count)
                     {
-                        produtos.RemoveAt(indiceRemover);
+                        produtos.RemoveAt(indiceRemover - 1);
                         Console.WriteLine("Produto removido com sucesso!");
                     }
                     else
@@ -64,7 +64,7 @@ class Program
                     int indiceExibir = int.Parse(Console.ReadLine());
                     if (indiceExibir >= 0 && indiceExibir < produtos.Count)
                     {
-                        Console.WriteLine($"Dados do produto:\n{produtos[indiceExibir]}");
+                        Console.WriteLine($"Dados do produto:\n{produtos[indiceExibir - 1]}");
                     }
                     else
                     {
@@ -80,7 +80,7 @@ class Program
                     {
                         Console.Write("Digite a quantidade de produtos a ser adicionada no estoque: ");
                         int qte = int.Parse(Console.ReadLine());
-                        produtos[indiceAdicionar].AdicionarProdutos(qte);
+                        produtos[indiceAdicionar - 1].AdicionarProdutos(qte);
                         Console.WriteLine("Quantidade adicionada com sucesso!");
                     }
                     else
@@ -102,7 +102,7 @@ class Program
     {
         for (int i = 0; i < produtos.Count; i++)
         {
-            Console.WriteLine($"[{i}] {produtos[i].Nome}");
+            Console.WriteLine($"[{i + 1}] {produtos[i].Nome}");
         }
     }
 }

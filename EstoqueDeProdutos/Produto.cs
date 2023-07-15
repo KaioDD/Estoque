@@ -42,6 +42,7 @@ namespace EstoqueDeProdutos
 
         public override string ToString()
          //Reescrita do metodo toString para apresentar o produto de forma "Personalizada"
+        
         {
             return Apresentar();    
         }

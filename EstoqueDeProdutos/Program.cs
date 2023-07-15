@@ -107,34 +107,6 @@ class Program
     }
 }
 
-class Produto
-{
-    public string Nome { get; set; }
-    public double Preco { get; set; }
-    public int Quantidade { get; set; }
-
-    public void AdicionarProdutos(int quantidade)
-    {
-        Quantidade += quantidade;
-    }
-
-    public void RemoverProduto(int quantidade)
-    {
-        if (quantidade <= Quantidade)
-        {
-            Quantidade -= quantidade;
-        }
-        else
-        {
-            Console.WriteLine("Quantidade insuficiente no estoque!");
-        }
-    }
-
-    public override string ToString()
-    {
-        return $"Nome: {Nome}\nPreço: {Preco.ToString("F2", CultureInfo.InvariantCulture)}\nQuantidade: {Quantidade}";
-    }
-}
 
 
 

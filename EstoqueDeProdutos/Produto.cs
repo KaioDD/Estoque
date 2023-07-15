@@ -22,9 +22,17 @@ namespace EstoqueDeProdutos
         {
             Quantidade += quantidade;
         }
-        public void RemoverProduto(int quantidade) 
+
+        public void RemoverProduto(int quantidade)
         {
-            Quantidade -= quantidade;
+            if (quantidade <= Quantidade)
+            {
+                Quantidade -= quantidade;
+            }
+            else
+            {
+                Console.WriteLine("Quantidade insuficiente no estoque!");
+            }
         }
         private string Apresentar()
         {

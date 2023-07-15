@@ -1,45 +1,141 @@
 ﻿using EstoqueDeProdutos;
 using System.Xml;
 using System.Globalization;
+using System;
 
-internal class Program
+
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+
+class Program
 {
-    private static void Main(string[] args)
+    static void Main()
     {
-        Produto p = new Produto();
+        Console.WriteLine("Bem-vindo ao gerenciador de estoque");
 
+        List<Produto> produtos = new List<Produto>();
 
-        Console.WriteLine("Bem Vindo ao gerenciador de estoque");
-        Console.WriteLine("Entre com os dados do produto");
-        Console.Write("Nome: ");
-        p.Nome = Console.ReadLine();
+        int opc;
+        do
+        {
+            Console.WriteLine("\nSelecione a opção desejada:");
+            Console.WriteLine("1- Adicionar Produto");
+            Console.WriteLine("2- Remover produto");
+            Console.WriteLine("3- Ver dados do produto");
+            Console.WriteLine("4- Adicionar quantidade ao estoque");
+            Console.WriteLine("0- Sair");
 
-        Console.Write("Preço: ");
-        p.Preco = double.Parse(Console.ReadLine(),CultureInfo.InvariantCulture);
+            opc = int.Parse(Console.ReadLine());
 
-        Console.Write("Quantidade disponivel em estoque: ");
-        p.Quantidade = int.Parse(Console.ReadLine());
-
-        Console.WriteLine();
-        Console.WriteLine("Dados do produto: " + p);
-        // o P vai ser representado pelo metodo Tostring que foi reescrito na classe produto 
-
-        Console.WriteLine();
-        Console.Write("Digite a quantidade de produtos a ser adicionado no estoque: ");
-        int qte = int.Parse(Console.ReadLine());
-        p.AdicionarProdutos(qte);
-        // O metodo adicionar produtos vai receber o valor inserido na variavel "qte" e somar ao valor ja existente na quantidade inicial.
-        Console.WriteLine("");
-        Console.WriteLine($"Dados atualizado: {p}");
-
-        Console.Write("Digite a quantidade de produtos a ser removido do estoque:  ");
-        qte = int.Parse(Console.ReadLine());
-        p.RemoverProduto(qte);
-
-        Console.WriteLine("");
-        Console.WriteLine($"Dados atualizado: {p}");
-
-
+            switch (opc)
+            {
+                case 1:
+                    Console.Clear();
+                    Produto novoProduto = new Produto();
+                    Console.Write("Nome: ");
+                    novoProduto.Nome = Console.ReadLine();
+                    Console.Write("Preço: ");
+                    novoProduto.Preco = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    Console.Write("Quantidade disponível em estoque: ");
+                    novoProduto.Quantidade = int.Parse(Console.ReadLine());
+                    produtos.Add(novoProduto);
+                    Console.WriteLine("Produto adicionado com sucesso!");
+                    break;
+                case 2:
+                    Console.Clear();
+                    Console.WriteLine("Selecione o produto a ser removido:");
+                    ListarProdutos(produtos);
+                    int indiceRemover = int.Parse(Console.ReadLine());
+                    if (indiceRemover >= 0 && indiceRemover < produtos.Count)
+                    {
+                        produtos.RemoveAt(indiceRemover);
+                        Console.WriteLine("Produto removido com sucesso!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Índice inválido!");
+                    }
+                    break;
+                case 3:
+                    Console.Clear();
+                    Console.WriteLine("Selecione o produto para ver os dados:");
+                    ListarProdutos(produtos);
+                    int indiceExibir = int.Parse(Console.ReadLine());
+                    if (indiceExibir >= 0 && indiceExibir < produtos.Count)
+                    {
+                        Console.WriteLine($"Dados do produto:\n{produtos[indiceExibir]}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Índice inválido!");
+                    }
+                    break;
+                case 4:
+                    Console.Clear();
+                    Console.WriteLine("Selecione o produto para adicionar quantidade:");
+                    ListarProdutos(produtos);
+                    int indiceAdicionar = int.Parse(Console.ReadLine());
+                    if (indiceAdicionar >= 0 && indiceAdicionar < produtos.Count)
+                    {
+                        Console.Write("Digite a quantidade de produtos a ser adicionada no estoque: ");
+                        int qte = int.Parse(Console.ReadLine());
+                        produtos[indiceAdicionar].AdicionarProdutos(qte);
+                        Console.WriteLine("Quantidade adicionada com sucesso!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Índice inválido!");
+                    }
+                    break;
+                case 0:
+                    Console.WriteLine("Saindo do programa...");
+                    break;
+                default:
+                    Console.WriteLine("Opção inválida. Tente novamente.");
+                    break;
+            }
+        } while (opc != 0);
     }
 
+    static void ListarProdutos(List<Produto> produtos)
+    {
+        for (int i = 0; i < produtos.Count; i++)
+        {
+            Console.WriteLine($"[{i}] {produtos[i].Nome}");
+        }
+    }
 }
+
+class Produto
+{
+    public string Nome { get; set; }
+    public double Preco { get; set; }
+    public int Quantidade { get; set; }
+
+    public void AdicionarProdutos(int quantidade)
+    {
+        Quantidade += quantidade;
+    }
+
+    public void RemoverProduto(int quantidade)
+    {
+        if (quantidade <= Quantidade)
+        {
+            Quantidade -= quantidade;
+        }
+        else
+        {
+            Console.WriteLine("Quantidade insuficiente no estoque!");
+        }
+    }
+
+    public override string ToString()
+    {
+        return $"Nome: {Nome}\nPreço: {Preco.ToString("F2", CultureInfo.InvariantCulture)}\nQuantidade: {Quantidade}";
+    }
+}
+
+
+
+
